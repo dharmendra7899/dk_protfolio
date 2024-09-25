@@ -2,26 +2,12 @@ import 'package:flutter/material.dart';
 
 Color kGrey = const Color(0xFF334055);
 Color kPrimaryColor = const Color(0xFF334055);
+Color kTextColor = const Color(0xff120F1B);
+
 Color kWhite = Colors.white;
 Color kBlack = Colors.black;
 
-TextStyle kTitleText = TextStyle(
-  color: Colors.black,
-  fontSize: 28.0,
-  fontWeight: FontWeight.bold,
-);
 
-TextStyle kSubTitleText = TextStyle(
-  color: kPrimaryColor,
-  fontWeight: FontWeight.bold,
-  fontSize: 12.0,
-);
-
-TextStyle kSectionTitleText = TextStyle(
-  color: kPrimaryColor,
-  fontWeight: FontWeight.bold,
-  fontSize: 18.0,
-);
 
 ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(
   style: ButtonStyle(

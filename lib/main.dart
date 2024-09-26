@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled2/screens/home_screen.dart';
+import 'package:untitled2/screens/profile_screen.dart';
 
 import 'constants/constants.dart';
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           elevatedButtonTheme: elevatedButtonThemeData),
-      home: const HomeScreen(),
+      home: const ProfileScreen(),
     );
   }
 }

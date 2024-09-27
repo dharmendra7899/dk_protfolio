@@ -1,73 +1,107 @@
 import 'package:flutter/material.dart';
 import 'package:untitled2/constants/constants.dart';
 import 'package:untitled2/data/project_model.dart';
+import 'package:untitled2/screens/project_details.dart';
 import 'package:untitled2/utils/app_text.dart';
-import 'package:untitled2/utils/extensions.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class ProjectWidget extends StatelessWidget {
-  final Project projectData;
+class ProjectCard extends StatelessWidget {
+  final Project project1;
 
-  const ProjectWidget({super.key, required this.projectData});
+  const ProjectCard({super.key, required this.project1});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: context.screenConstraint().width * 0.4,
-      child: Card(
-        color: kWhite,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
+    return Card(
+      elevation: 1,
+      color: kWhite,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Icon(
-                  Icons.settings,
-                  color: kGrey,
-                  size: 18,
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Card(
+                    elevation: 1,
+                    color: kWhite,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        project1.logo.toString(),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 8,
                 ),
                 appText(
-                    title: projectData.name,
-                    color: kPrimaryColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
+                  title: project1.title,
+                  color: kTextColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
               ],
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: appText(
-                  title: projectData.description,
-                  color: kPrimaryColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400),
+            const SizedBox(height: 10),
+            appText(
+              title: project1.description,
+              color: kTextColor,
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
             ),
-          ),
-          // const Spacer(),
-          const Divider(),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  final Uri url = Uri.parse(projectData.link);
-                  await launchUrl(url);
-                },
-                child: appText(
-                    title: "View Project",
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Wrap(
+                    spacing: 6.0,
+                    runSpacing: 6.0,
+                    children: project1.technologies
+                        .map((tech) => Chip(label: Text(tech)))
+                        .toList(),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProjectDetails(
+                            appName: project1.title,
+                            description: project1.description,
+                            appStoreLink: project1.appStoreLink,
+                            playStoreLink: project1.playStoreLink,
+                            logo: project1.logo.toString(),
+                          ),
+                        ));
+                    // final Uri url = Uri.parse(project1.link);
+                    // await launchUrl(url);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                  ),
+                  child: appText(
+                    title: 'View Project',
                     color: kWhite,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500),
-              ),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }

@@ -1,11 +1,17 @@
 class Project {
-  String name;
-  String description;
-  String link;
+  final String title;
+  final String description;
+  final String? playStoreLink;
+  final String? appStoreLink;
+  final String? logo;
+  final List<String> technologies;
 
   Project({
-    required this.name,
+    required this.title,
     required this.description,
-    required this.link,
+    required this.logo,
+    this.appStoreLink,
+    this.playStoreLink,
+    required this.technologies,
   });
 }

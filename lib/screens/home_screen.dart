@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:untitled2/constants/constants.dart';
 import 'package:untitled2/data/data.dart';
 import 'package:untitled2/screens/project_widget.dart';
@@ -8,21 +8,111 @@ import 'package:untitled2/utils/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  List<String> skillList = [
+    "Flutter",
+    "Android",
+    "Dart",
+    "Kotlin",
+    "Java",
+    "BLoC",
+    "GetX",
+    "Provider",
+    "Firebase",
+    "REST APIs",
+    "Google Maps"
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: appText(
-          title: "Portfolio",
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
+          title: "My Portfolio",
+          color: kWhite,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
         ),
+        centerTitle: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 18.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                PopupMenuButton<int>(
+                    child: Row(
+                      children: [
+                        appText(
+                          title: "Technologies",
+                          color: kWhite,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 22,
+                          color: kWhite,
+                        )
+                      ],
+                    ),
+                    itemBuilder: (context) {
+                      return List<PopupMenuItem<int>>.generate(
+                        skillList.length,
+                        (int index) {
+                          return PopupMenuItem(
+                            value: index,
+                            child: appText(
+                              title: skillList[index],
+                              color: kTextColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          );
+                        },
+                      );
+                    }),
+                const SizedBox(
+                  width: 10,
+                ),
+                IconButton(
+                  onPressed: () async {
+                    final Uri url = Uri.parse(instagram);
+                    await launchUrl(url);
+                  },
+                  icon: FaIcon(
+                    FontAwesomeIcons.instagram,
+                    color: kWhite,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    final Uri url = Uri.parse(github);
+                    await launchUrl(url);
+                  },
+                  icon: FaIcon(
+                    FontAwesomeIcons.github,
+                    color: kWhite,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    final Uri url = Uri.parse(linkedIN);
+                    await launchUrl(url);
+                  },
+                  icon: FaIcon(
+                    FontAwesomeIcons.linkedin,
+                    color: kWhite,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
         backgroundColor: kGradient1,
       ),
-      body:  SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -30,7 +120,7 @@ class HomeScreen extends StatelessWidget {
             _buildHeader(context),
             const SizedBox(height: 15),
             _buildProfileInfo(),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             _buildActionButtons(),
             const SizedBox(height: 10),
             _buildExperienceAndContact(context),
@@ -53,13 +143,16 @@ class HomeScreen extends StatelessWidget {
           fit: BoxFit.fill,
         ),
       ),
-      child: Align(
+      child: const Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: EdgeInsets.all(12.0),
           child: CircleAvatar(
-            radius: 70,
-            backgroundImage: AssetImage(imagePath),
+            radius: 80,
+            backgroundImage: AssetImage(
+              'assets/images/dk.jpeg',
+              // Replace with your profile image
+            ),
           ),
         ),
       ),
@@ -72,16 +165,17 @@ class HomeScreen extends StatelessWidget {
         Center(
           child: appText(
             title: name,
-            color: const Color(0xff120F1B),
+            color: kTextColor,
             fontSize: 24,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
+        const SizedBox(height: 8),
         Center(
           child: appText(
             title: profile,
-            color: kPrimaryColor,
-            fontSize: 12,
+            color: kGrey,
+            fontSize: 18,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -93,15 +187,18 @@ class HomeScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        OutlinedButton(
+        ElevatedButton(
           onPressed: () async {
             final Uri url = Uri.parse(resumeLink);
             await launchUrl(url);
           },
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          ),
           child: appText(
-            title: "View Resume",
-            color: kPrimaryColor,
-            fontSize: 12,
+            title: 'Resume',
+            color: kWhite,
+            fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -114,17 +211,14 @@ class HomeScreen extends StatelessWidget {
             );
             await launchUrl(emailLaunchUri);
           },
-          child: Row(
-            children: [
-              const Icon(Icons.add, size: 14, color: Colors.white),
-              const SizedBox(width: 2),
-              appText(
-                title: "Contact",
-                color: kWhite,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ],
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          ),
+          child: appText(
+            title: 'Email me',
+            color: kWhite,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -134,108 +228,80 @@ class HomeScreen extends StatelessWidget {
   Widget _buildExperienceAndContact(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: context.screenConstraint().width * 0.8,
+        width: context.screenConstraint().width * 0.9,
         child: context.screenConstraint().width > 1200
             ? Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(flex: context.screenConstraint().width > 1200 ? 3 : 1,
-                child: _buildExperienceColumn(context)),
-            const SizedBox(width: 10),
-            Flexible(flex: 1,
-                child: _buildContactCard()),
-          ],
-        )
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                      flex: context.screenConstraint().width > 1200 ? 3 : 1,
+                      child: _buildExperienceColumn(context)),
+                  const SizedBox(width: 10),
+                  Flexible(flex: 1, child: _buildContactCard()),
+                ],
+              )
             : Column(
-          children: [
-            _buildExperienceColumn(context),
-            const SizedBox(height: 10),
-            _buildContactCard(),
-          ],
-        ),
-      ),
-    );
-  }
-
-
-  Widget _buildProjectsGrid1(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: GridView.count(
-          padding: const EdgeInsetsDirectional.only(top: 5),
-          crossAxisCount: context.screenConstraint().width > 1000?2:1,
-          shrinkWrap: true,
-          childAspectRatio:context.screenConstraint().width > 1000?2.310:0.97,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          physics: const NeverScrollableScrollPhysics(),
-          children: List.generate( projectList.length ,
-                (productIndex) {
-              return SizedBox(
-                  child: ProjectWidget(projectData: projectList[productIndex])
-              );
-            },
-          ),
-        ),
+                children: [
+                  _buildExperienceColumn(context),
+                  const SizedBox(height: 10),
+                  _buildContactCard(),
+                ],
+              ),
       ),
     );
   }
 
   Widget _buildProjectsGrid(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
-
     return Center(
       child: SizedBox(
-        width: screenWidth * 0.8,
-        child: GridView.count(
-          padding: const EdgeInsetsDirectional.only(top: 5),
-          crossAxisCount: screenWidth > 1300 ? 3 : screenWidth > 600?2:1,
-          shrinkWrap: true,
-          childAspectRatio: _calculateChildAspectRatio(screenWidth, screenHeight),
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          physics: const NeverScrollableScrollPhysics(),
-          children: List.generate(projectList.length, (productIndex) {
-            return SizedBox(
-              child: ProjectWidget(projectData: projectList[productIndex]),
-            );
-          }),
+        width: context.screenConstraint().width * 0.9,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth > 1000) {
+              return GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 6,
+                  mainAxisSpacing: 6,
+                  childAspectRatio: 2.0,
+                ),
+                itemCount: projectList.length,
+                itemBuilder: (context, index) {
+                  return ProjectCard(project1: projectList[index]);
+                },
+              );
+            } else {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: projectList.length,
+                itemBuilder: (context, index) {
+                  return ProjectCard(project1: projectList[index]);
+                },
+              );
+            }
+          },
         ),
       ),
     );
   }
-
-  double _calculateChildAspectRatio(double screenWidth, double screenHeight) {
-    if (screenWidth > 1200 ) {
-      return 1.2;
-    } else if (screenWidth > 600) {
-      return 1.56;
-    } else {
-      return 0.97;
-    }
-  }
-
-
-
 
   Widget _buildExperienceColumn(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         appText(
-          title: "Experience",
+          title: 'About Me',
           color: kTextColor,
-          fontSize: 16,
+          fontSize: 28,
           fontWeight: FontWeight.w600,
         ),
         const SizedBox(height: 10),
         appText(
           title: aboutWorkExperience,
           color: kTextColor,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
         ),
         const SizedBox(height: 12),
         const Divider(),
@@ -246,22 +312,39 @@ class HomeScreen extends StatelessWidget {
   Widget _buildContactCard() {
     return Card(
       color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildContactInfo("Location", location),
-            _buildLinkInfo("LinkedIn", linkedIN),
-            _buildLinkInfo("Github", github),
-            _buildLinkInfo("Email", email),
+            _buildContactInfo(
+                title: "Location",
+                value: location,
+                iconData: FontAwesomeIcons.locationArrow),
+            _buildContactInfo(
+              title: "Email",
+              value: email,
+            ),
+            _buildContactInfo(
+              title: "Mobile",
+              value: mobile,
+            ),
+            _buildContactInfo(
+              title: "Date of Birth",
+              value: dob,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildContactInfo(String title, String value) {
+  Widget _buildContactInfo({
+    required String title,
+    required String value,
+    IconData? iconData,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -273,9 +356,15 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(Icons.location_on, size: 16),
-            const SizedBox(width: 2),
+            iconData != null
+                ? FaIcon(
+                    iconData,
+                    size: 15,
+                  )
+                : const SizedBox(),
+            iconData != null ? const SizedBox(width: 5) : const SizedBox(),
             appText(
               title: value,
               color: kTextColor,
@@ -302,20 +391,32 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(height: 5),
         GestureDetector(
           onTap: () async {
-            final Uri url = Uri.parse(link);
-            await launchUrl(url);
+            if (title == "Email") {
+            } else {
+              final Uri url = Uri.parse(link);
+              await launchUrl(url);
+            }
           },
           child: Row(
             children: [
-              appText(
-                title: title,
-                color: Colors.blue,
-                fontSize: 12,
-                textDecoration: TextDecoration.underline,
-                fontWeight: FontWeight.w500,
-              ),
+              title == "Email"
+                  ? appText(
+                      title: link,
+                      color: kTextColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    )
+                  : appText(
+                      title: title,
+                      color: Colors.blue,
+                      fontSize: 12,
+                      textDecoration: TextDecoration.underline,
+                      fontWeight: FontWeight.w500,
+                    ),
               const SizedBox(width: 2),
-              const Icon(Icons.launch, color: Colors.blue, size: 12),
+              title == "Email"
+                  ? const SizedBox()
+                  : const Icon(Icons.launch, color: Colors.blue, size: 12),
             ],
           ),
         ),
@@ -323,7 +424,4 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-
-
-
 }

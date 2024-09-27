@@ -11,19 +11,19 @@ class Portfolio extends StatelessWidget {
         description:
             "Your gateway to effortless travel! Available on both Play Store and App Store, OneVasco revolutionizes the e-Visa application process with its user-friendly design and streamlined functionality. With just a few taps, users can apply for visas, track their application status, and receive real-time updates, all from the palm of their hand. Enhanced with secure payment integration and multilingual support, OneVasco empowers travelers worldwide to navigate the visa process with confidence and ease.",
         link: "https://github.com/dharmendra7899/merchant_aap.git",
-        technologies: ['Flutter', 'Dart']),
+        technologies: ['Flutter', 'Dart', "CCAvenue"]),
     Project(
         title: "PIPOnet",
         description:
             "Stay on track with real-time train status updates at your fingertips! Available for download, PIPOnet simplifies your travel experience by providing accurate information on train locations, schedules, and delays. With an intuitive interface and instant notifications, users can effortlessly check 'Where is my train?' and plan their journeys with confidence. Whether you're a daily commuter or an occasional traveler, PIPOnet ensures you never miss a beat on your rail adventures!",
         link: "https://github.com/dharmendra7899/merchant_aap.git",
-        technologies: ['Flutter', 'Dart']),
+        technologies: ['Flutter', 'Dart', "Firebase"]),
     Project(
         title: "Rb Restaurant",
         description:
             "Savor the flavors of your favorite dishes right from your device! Designed for food lovers, the RB Restaurant app makes online food ordering a breeze. Browse through an extensive menu filled with delicious options, customize your orders, and enjoy seamless payment options. With real-time order tracking and prompt delivery, satisfying your cravings has never been easier. Whether you're at home or on the go, RB Restaurant brings culinary delights to your doorstep, ensuring a delightful dining experience every time!",
         link: "https://github.com/dharmendra7899/merchant_aap.git",
-        technologies: ['Flutter', 'Dart']),
+        technologies: ['Flutter', 'Dart', "SQLite"]),
     Project(
         title: "Shop Sasta",
         description:
@@ -34,7 +34,7 @@ class Portfolio extends StatelessWidget {
         title: "CloseToBuy",
         description: "A template for Portfolio",
         link: "https://github.com/dharmendra7899/merchant_aap.git",
-        technologies: ['Flutter', 'Dart']),
+        technologies: ['Flutter', 'Dart', "RazorPay", "Firebase"]),
     Project(
         title: "Mechmiles Customer",
         description:
@@ -80,7 +80,6 @@ class Portfolio extends StatelessWidget {
                 },
               );
             } else {
-              // Mobile Layout: Column View
               return ListView.builder(
                 itemCount: projectList.length,
                 itemBuilder: (context, index) {
